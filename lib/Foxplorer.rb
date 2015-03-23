@@ -1,4 +1,5 @@
-require_relative '../lib/Hooks'
+require_relative 'Hooks'
+require_relative 'FolderState'
 Dir[File.join('plugins/', "*.rb")].each {|file| require_relative "../#{file}" }
 require 'parseconfig'
 
@@ -18,6 +19,9 @@ class Foxplorer
 
     # initialise hook register
     @hooks = Hooks.new
+    
+    # initialise folder state
+    @folderstate = FolderState.new('.')
   end
 
   # Start the application
@@ -52,18 +56,26 @@ class Foxplorer
   # register all system levers for the application
   def provide_levers
     @hooks.provide_lever(Hooks::L_SHUTDOWN, method(:sys_lever_shutdown))
+    @hooks.provide_lever(Hooks::L_CHDIR, method(:sys_lever_chdir))
   end
 
   # system lever to shutdown the application
   def sys_lever_shutdown(args)
     cause = args[0]
     caller = args[1]
-    
+
     # signal shutdown to everyone
     @hooks.activate_hook(Hooks::H_SHUTDOWN, [cause, caller])
 
     # TODO update configuration
     java.lang.System.exit(0)
+  end
+  
+  # change current directory
+  def sys_lever_chdir(arg)
+    return if arg == nil
+    
+    @folderstate.change_location(arg)
   end
 
   private :provide_levers, :load_plugins

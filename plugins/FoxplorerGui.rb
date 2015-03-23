@@ -54,6 +54,16 @@ class FoxplorerGui
     @frame.visible = true
     @frame.default_close_operation = JFrame::EXIT_ON_CLOSE
     @frame.add_window_listener GuiWindowListener.new(@hooks)
+    
+    @parentbutton = javax.swing.JButton.new('..')
+    @parentbutton.add_action_listener do |event|
+      @hooks.pull_lever(Hooks::L_CHDIR, '..')
+    end
+    
+    layout = java.awt.BorderLayout.new
+    @frame.set_layout layout
+    @frame.add @parentbutton, java.awt.BorderLayout::CENTER
+    
   end
   
   def hook_shutdown(args)

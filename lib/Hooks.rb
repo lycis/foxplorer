@@ -2,9 +2,11 @@ class Hooks
   # constants for system hooks
   H_STARTUP = "startup" # indicatest that the application was successfully started
   H_SHUTDOWN = "shutdown" # signals that the application is going to shut down
+  H_CHDIR = "chdir" # current directory was changed
   
   # constants for system levers
   L_SHUTDOWN = "shutdown" # shut down the application
+  L_CHDIR = "chdir" # changes the current directory
   
   def initialize
     @hook_register = Hash.new(nil)
