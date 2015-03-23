@@ -51,7 +51,7 @@ class Foxplorer
 
   # register all system levers for the application
   def provide_levers
-    @hooks.provide_lever("shutdown", method(:sys_lever_shutdown))
+    @hooks.provide_lever(Hooks::L_SHUTDOWN, method(:sys_lever_shutdown))
   end
 
   # system lever to shutdown the application

@@ -17,7 +17,7 @@ class GuiWindowListener
 
   def windowClosing(evnt)
     print "gui exit"
-    @hooks.pull_lever("shutdown", ["user requested exit", self])
+    @hooks.pull_lever(Hooks::L_SHUTDOWN, ["user requested exit", self])
   end
 
   def windowActivated(evnt)

@@ -2,6 +2,10 @@ class Hooks
   # constants for system hooks
   H_STARTUP = "startup" # indicatest that the application was successfully started
   H_SHUTDOWN = "shutdown" # signals that the application is going to shut down
+  
+  # constants for system levers
+  L_SHUTDOWN = "shutdown" # shut down the application
+  
   def initialize
     @hook_register = Hash.new(nil)
     @lever_register = Hash.new(nil)
